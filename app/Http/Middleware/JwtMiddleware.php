@@ -17,7 +17,8 @@ class JwtMiddleware
 
         $token = substr($authHeader, 7);
         try {
-            $publicKey = file_get_contents(base_path(env('AUTH_PUBLIC_KEY_PATH')));
+            $key_path  = config('jwt.public_key_path');
+            $publicKey = file_get_contents(base_path($key_path));
 
             $decoded = JWT::decode($token, new Key($publicKey, 'RS256'));
 

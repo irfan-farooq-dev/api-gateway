@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('auth')->group(function () {
     Route::any('{any}', function ($any) {
-        $url      = config('services.auth') . '/' . $any;
+        $url      = config('services.auth') . '/api/' . $any;
         $response = Http::withHeaders(request()->headers->all())
             ->send(request()->method(), $url, [
                 'json' => request()->all(),

@@ -1,0 +1,215 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Gateway",
+        "description": "Gateway endpoints that proxy to auth and profile microservices",
+        "version": "1.0"
+    },
+    "paths": {
+        "/api/auth/{any}": {
+            "get": {
+                "summary": "Proxy GET requests to Auth service",
+                "description": "Generic proxy to auth microservice",
+                "operationId": "9aa7cfcffb4c2a26fc4a4c6a7491e18a",
+                "parameters": [
+                    {
+                        "name": "any",
+                        "in": "path",
+                        "description": "Path on auth service (e.g. 'login' or 'users/1')",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "default": {
+                        "description": "Error response"
+                    }
+                }
+            },
+            "post": {
+                "summary": "Proxy POST requests to Auth service",
+                "operationId": "b7f28f1735f5e36c7886ff4dd7d9a4e1",
+                "parameters": [
+                    {
+                        "name": "any",
+                        "in": "path",
+                        "description": "Path on auth service (e.g. 'register')",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "additionalProperties": true
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "default": {
+                        "description": "Error response"
+                    }
+                }
+            }
+        },
+        "/profile/{any}": {
+            "get": {
+                "summary": "Proxy GET requests to Profile service",
+                "description": "Generic proxy to profile microservice (requires JWT)",
+                "operationId": "6ca0bba25bbf5b1dad545453d0381c09",
+                "parameters": [
+                    {
+                        "name": "any",
+                        "in": "path",
+                        "description": "Path on profile service (e.g. 'me' or 'users/1')",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "default": {
+                        "description": "Error response"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "summary": "Proxy POST requests to Profile service",
+                "operationId": "eb098153fe55652768abd447f891c5d4",
+                "parameters": [
+                    {
+                        "name": "any",
+                        "in": "path",
+                        "description": "Path on profile service",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "additionalProperties": true
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "default": {
+                        "description": "Error response"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/clear": {
+            "get": {
+                "summary": "Clear application caches",
+                "description": "Clear caches",
+                "operationId": "9f75441f03d2d8434ed2fe2919952f3d",
+                "responses": {
+                    "200": {
+                        "description": "Cleared message",
+                        "content": {
+                            "text/plain": {}
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "description": "Enter token as: Bearer <token>",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    }
+}
