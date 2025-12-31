@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
+use Illuminate\Support\Facades\Http;
 use Symfony\Component\HttpFoundation\Response;
 
 class JwtMiddleware
@@ -17,8 +18,10 @@ class JwtMiddleware
 
         $token = substr($authHeader, 7);
         try {
-            $key_path  = config('jwt.public_key_path');
-            $publicKey = file_get_contents(base_path($key_path));
+            $publicKey = cache()->remember('auth_public_key', 3600, function () {
+                $response = Http::get(config('services.auth') . '/api/public-key');
+                return $response->json('public_key');
+            });
 
             $decoded = JWT::decode($token, new Key($publicKey, 'RS256'));
 

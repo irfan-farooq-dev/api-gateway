@@ -69,8 +69,19 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "type": "object",
-                                "additionalProperties": true
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "jane@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "secretPassword"
+                                    }
+                                },
+                                "type": "object"
                             }
                         }
                     }
@@ -88,11 +99,11 @@
                 }
             }
         },
-        "/profile/{any}": {
+        "/api/profile/{any}": {
             "get": {
                 "summary": "Proxy GET requests to Profile service",
                 "description": "Generic proxy to profile microservice (requires JWT)",
-                "operationId": "6ca0bba25bbf5b1dad545453d0381c09",
+                "operationId": "d69159014abcd85c9a49b13b4ae153dc",
                 "parameters": [
                     {
                         "name": "any",
@@ -134,7 +145,7 @@
             },
             "post": {
                 "summary": "Proxy POST requests to Profile service",
-                "operationId": "eb098153fe55652768abd447f891c5d4",
+                "operationId": "1cc7face3941a43c083a1ceb3dee66dd",
                 "parameters": [
                     {
                         "name": "any",

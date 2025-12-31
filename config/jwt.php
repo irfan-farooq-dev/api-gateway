@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'public_key_path' => env('AUTH_PUBLIC_KEY_PATH', storage_path('keys/public.pem')),
+    'public_key_path' => storage_path(env('AUTH_PUBLIC_KEY_PATH', 'keys/id_rsa.pub')),
 ];

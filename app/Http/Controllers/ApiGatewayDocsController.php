@@ -41,7 +41,10 @@ class ApiGatewayDocsController extends Controller
      *     @OA\Parameter(name="Authorization", in="header", required=false, @OA\Schema(type="string")),
      *     @OA\RequestBody(
      *         required=false,
-     *         @OA\MediaType(mediaType="application/json", @OA\Schema(type="object", additionalProperties=true))
+     *          @OA\JsonContent(
+     *             @OA\Property(property="email", type="string", format="email", example="jane@example.com"),
+     *             @OA\Property(property="password", type="string", format="password", example="secretPassword")
+     *         )
      *     ),
      *     @OA\Response(response="200", description="Successful response", @OA\MediaType(mediaType="application/json")),
      *     @OA\Response(response="default", description="Error response")
@@ -55,10 +58,10 @@ class ApiGatewayDocsController extends Controller
     /**
      * Generic proxy to profile microservice (requires JWT)
      *
-     * @OA\PathItem(path="/profile/{any}")
+     * @OA\PathItem(path="/api/profile/{any}")
      *
      * @OA\Get(
-     *     path="/profile/{any}",
+     *     path="/api/profile/{any}",
      *     summary="Proxy GET requests to Profile service",
      *     security={{"bearerAuth":{}}},
      *     @OA\Parameter(name="any", in="path", required=true, description="Path on profile service (e.g. 'me' or 'users/1')", @OA\Schema(type="string")),
@@ -69,7 +72,7 @@ class ApiGatewayDocsController extends Controller
      * )
      *
      * @OA\Post(
-     *     path="/profile/{any}",
+     *     path="/api/profile/{any}",
      *     summary="Proxy POST requests to Profile service",
      *     security={{"bearerAuth":{}}},
      *     @OA\Parameter(name="any", in="path", required=true, description="Path on profile service", @OA\Schema(type="string")),
